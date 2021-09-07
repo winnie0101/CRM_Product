@@ -1,4 +1,5 @@
 ﻿using CRM_side_project.Application;
+using CRM_side_project.Application.Common;
 using CRM_side_project.Application.Product.Contract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,47 +20,43 @@ namespace CRM_side_project.Controller
             _service = service;
         }
 
-        //// GET: ProductController
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        //// GET: ProductController/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
-
+        
 
         // POST: ProductController/CreateProduct
-        [HttpPost("Product")]
+        [HttpPost]
         public async ValueTask<IActionResult> CreateProduct([FromBody] CreateProductRequest request)
         {
             return Ok(await _service.CreateProduct(request));
         }
-        [HttpGet("Product/{id}")]
+        [HttpGet("{id}")]
         public async ValueTask<IActionResult> GetProductById(long id)
         {
             return Ok(await _service.GetProductById(id));
         }
-        [HttpGet("Product")]
+        [HttpGet]
         public async ValueTask<IActionResult> GetAllProduct()
         {
             return Ok(await _service.GetAllProduct());
         }
-        [HttpPut("Product/{id}")]
+        [HttpPut("{id}")]
         public async ValueTask<IActionResult> UpdateProduct(long id, [FromBody] UpdateProductRequest request)
         {
             return Ok(await _service.UpdateProduct(id, request));
         }
-        [HttpDelete("Product/{id}")]
+        [HttpDelete("{id}")]
         public async ValueTask<IActionResult> DeleteProduct(long id)
         {
             return Ok(await _service.DeleteProduct(id));
         }
 
-       
+        //關鍵字查詢
+        [HttpPost("GetProducts")]
+        public async ValueTask<IActionResult> GetProducts([FromBody] PagingRequest request)
+        {
+            return Ok(await _service.GetProducts(request));
+        }
+
+
 
         #region Type
         // POST: ProductController/CreateType

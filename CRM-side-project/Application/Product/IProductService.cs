@@ -1,5 +1,6 @@
 ﻿using CRM_side_project.Application.Common;
 using CRM_side_project.Application.Product.Contract;
+using CrmSysCRM_side_projecttemApi.DAL.Repository.Products.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ namespace CRM_side_project.Application
         ValueTask<BasicResponse<IEnumerable<GetAllProductResponse>>> GetAllProduct();
         ValueTask<BasicResponse<bool>> UpdateProduct(long id, UpdateProductRequest request);
         ValueTask<BasicResponse<bool>> DeleteProduct(long id);
+
+        //關鍵字查詢
+        ValueTask<PagingResponse<IEnumerable<ProductDetail>>> GetProducts(PagingRequest request);
         #endregion
 
         #region Type

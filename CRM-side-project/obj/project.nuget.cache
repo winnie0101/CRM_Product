@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2AuXSYsKW5gUfKLNsh+80eQ9+YpGwe8RSPfwHd0mPbXqTUmR416gsHD1FwN0hYKmWuCkDAz5o2zSnZdm9VfyGQ==",
+  "dgSpecHash": "l7R7DpNMm0fhfPqP3FmJ+U4nzaJ+3pFe31u6/jUFjgCNoyqGQ7o/bSJbKlwLSWnZOYfzRiGeDiVWQXu6775hNQ==",
   "success": true,
-  "projectFilePath": "D:\\winnie\\CRM-side-project\\CRM-side-project\\CRM-side-project.csproj",
+  "projectFilePath": "D:\\winnie\\CRM_Product\\CRM_Product\\CRM-side-project\\CRM-side-project.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\winnie.huang\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\winnie.huang\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.8\\microsoft.aspnetcore.jsonpatch.3.1.8.nupkg.sha512",

@@ -2,6 +2,7 @@
 using CRM_side_project.Application.Product.Contract;
 using CRM_side_project.DAL.Repository;
 using CRM_side_project.Handler;
+using CrmSysCRM_side_projecttemApi.DAL.Repository.Products.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -110,6 +111,18 @@ namespace CRM_side_project.Application
             }
             await _repository.DeleteProduct(id);
             return new BasicResponse<bool>() { code = 0000, desc = "delete product success", data = true };
+        }
+
+        //關鍵字查詢
+        public async ValueTask<PagingResponse<IEnumerable<ProductDetail>>> GetProducts(PagingRequest request)
+        {
+            var result = await _repository.GetProducts(request.ToPagingSearching());
+            return new PagingResponse<IEnumerable<ProductDetail>>()
+            {
+                code = 0000,
+                data = result.Data,
+                paging = new Paging(request.PageOffset + 1, request.PageSize, result.TotalCount)
+            };
         }
 
         #endregion

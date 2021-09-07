@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,32 +33,35 @@ namespace CRM_side_project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddRazorPages();
             services.AddControllers();
             services.AddOpenApiDocument();
             services.AddSingleton<IGenerateId>(s => new SnowflakeHandler(Environment.MachineName));
-            //services.AddControllers(
-            //    s =>
-            //    { s.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true; }
-            //    )
-            //    .AddJsonOptions(options =>
-            //    {
-            //        options.JsonSerializerOptions.IgnoreNullValues = true;
+            services.AddControllers(
+                s =>
+                { s.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true; }
+                )
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.IgnoreNullValues = true;
 
-            //    })
-            //    .AddNewtonsoftJson(
-            //    config =>
-            //    {
-            //        config.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            //        config.SerializerSettings.Converters.Add(new StringEnumConverter());
-            //        config.SerializerSettings.Converters.Add(new LongValueConverter());
-            //    });
+                })
+                .AddNewtonsoftJson(
+                config =>
+                {
+                    config.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    config.SerializerSettings.Converters.Add(new StringEnumConverter());
+                    config.SerializerSettings.Converters.Add(new LongValueConverter());
+                });
+            
             services.AddDbContext<CRMsideprojectContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Mssql"));
             });
             services.AddScoped<IProductService, ProductService>()
                 .AddScoped<IProductRepository, ProductRepository>(); 
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +71,8 @@ namespace CRM_side_project
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
+            app.UseCors("CorsPolicy");
 
             app.UseOpenApi();       // serve OpenAPI/Swagger documents
             app.UseSwaggerUi3();    // serve Swagger UI

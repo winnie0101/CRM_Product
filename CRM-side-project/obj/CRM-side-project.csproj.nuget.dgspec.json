@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\winnie\\CRM-side-project\\CRM-side-project\\CRM-side-project.csproj": {}
+    "D:\\winnie\\CRM_Product\\CRM_Product\\CRM-side-project\\CRM-side-project.csproj": {}
   },
   "projects": {
-    "D:\\winnie\\CRM-side-project\\CRM-side-project\\CRM-side-project.csproj": {
+    "D:\\winnie\\CRM_Product\\CRM_Product\\CRM-side-project\\CRM-side-project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\winnie\\CRM-side-project\\CRM-side-project\\CRM-side-project.csproj",
+        "projectUniqueName": "D:\\winnie\\CRM_Product\\CRM_Product\\CRM-side-project\\CRM-side-project.csproj",
         "projectName": "CRM-side-project",
-        "projectPath": "D:\\winnie\\CRM-side-project\\CRM-side-project\\CRM-side-project.csproj",
+        "projectPath": "D:\\winnie\\CRM_Product\\CRM_Product\\CRM-side-project\\CRM-side-project.csproj",
         "packagesPath": "C:\\Users\\winnie.huang\\.nuget\\packages\\",
-        "outputPath": "D:\\winnie\\CRM-side-project\\CRM-side-project\\obj\\",
+        "outputPath": "D:\\winnie\\CRM_Product\\CRM_Product\\CRM-side-project\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\winnie.huang\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,6 +1,8 @@
 ﻿using CRM_side_project.Application.Product.Contract;
 using CRM_side_project.Contexts;
+using CRM_side_project.DAL.Repository.Common;
 using CRM_side_project.Models;
+using CrmSysCRM_side_projecttemApi.DAL.Repository.Products.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -90,6 +92,112 @@ namespace CRM_side_project.DAL.Repository
             //_crmDbContext.Products.Remove(delete);
             _crmDbContext.Entry(delete).CurrentValues.SetValues(delete);
             return await _crmDbContext.SaveChangesAsync();
+        }
+
+        //關鍵字查詢
+        public async Task<PagingSearchingResult<ProductDetail>> GetProducts(PagingSearching searching)
+        {
+            var query = _crmDbContext.Products.AsQueryable();
+            var keyword = searching.WhereCondition.Keyword;
+
+            if(!string.IsNullOrEmpty(keyword))
+            {
+                //從type表中找出包含該type name的type id
+                var TypeIdFillter = await _crmDbContext.ProductTypes
+                                   .Where(x => x.TypeName.Contains(keyword))
+                                   .Select(x => x.TypeId).ToListAsync();
+
+                bool StatusKey;
+                if(keyword.Equals("ON",StringComparison.OrdinalIgnoreCase))
+                {
+                    StatusKey = true;
+                    query = query.Where(x => x.ProductName.Contains(keyword)
+                                        || TypeIdFillter.Contains(x.TypeId)
+                                        || x.IsEnabled == StatusKey);
+                        
+                }
+                else if (keyword.Equals("OFF", StringComparison.OrdinalIgnoreCase))
+                {
+                    StatusKey = false;
+                    query = query.Where(x => x.ProductName.Contains(keyword)
+                                        || TypeIdFillter.Contains(x.TypeId)
+                                        || x.IsEnabled == StatusKey);
+                }
+                else
+                {
+                    query = query.Where(x => x.ProductName.Contains(keyword)
+                                        || TypeIdFillter.Contains(x.TypeId));
+                }
+
+            }
+            if (searching.WhereCondition.StartDateTime.HasValue)
+            {
+                query = query.Where(x => x.CreatedDateTime >= searching.WhereCondition.StartDateTime.Value);
+            }
+
+            if (searching.WhereCondition.EndDateTime.HasValue)
+            {
+                query = query.Where(x => x.CreatedDateTime <= searching.WhereCondition.EndDateTime.Value);
+            }
+
+            var data = await query.Select(x => new ProductDetail
+            {
+                ProductId = x.ProductId,
+                ProductName = x.ProductName,
+                TypeId = x.TypeId,
+                //TypeName = _crmDbContext.ProductTypes.Find(x.TypeId).TypeName,
+                Price = x.Price,
+                Discount = x.Discount,
+                IsEnabled = x.IsEnabled,
+                Description = x.Description,
+                CreatedDateTime = x.CreatedDateTime,
+                CreatedUser = x.CreatedUser,
+                IsDeleted = x.IsDeleted,
+                UpdatedDateTime = x.UpdatedDateTime,
+                UpdatedTimes = x.UpdatedTimes,
+                Rowversion = x.Rowversion,
+                UpdatedUser = x.UpdatedUser
+            }).ToListAsync();
+
+            var typeNameDict = await _crmDbContext.ProductTypes.Where(x => x.TypeName.Contains(x.TypeName))
+                            .ToDictionaryAsync(x => x.TypeId, x => x.TypeName);
+            foreach (var eachData in data)
+            {
+                if (typeNameDict.ContainsKey(eachData.TypeId))
+                {
+                    eachData.TypeName = typeNameDict[eachData.TypeId];
+                }
+            }
+
+            Func<ProductDetail, string> keySelector = ProductDetail =>
+            {
+                return searching.Order.Column switch
+                {
+                    "Name" => ProductDetail.ProductName,
+                    "Type" => ProductDetail.TypeName,
+                    "Status" => ProductDetail.IsEnabled.ToString(),
+                    _ => ProductDetail.ProductName
+                };
+            };
+
+            IEnumerable<ProductDetail> result = default;
+            switch (searching.Order.Column)
+            {
+                case "Name":
+                case "type":
+                case "Status":
+                default:
+                    //result = searching.Order.IsOrderByDescending ? data.OrderByDescending(x => x.CreatedDateTime) : data.OrderBy(x => x.CreatedDateTime);
+                    result = searching.Order.IsOrderByDescending ? data.OrderByDescending(x => x.ProductName) : data.OrderBy(x => x.ProductName);
+                    break;
+            }
+            var totalCount = data.Count();
+            if (searching.Skip > 0)
+            {
+                result = result.Skip(searching.Skip);
+            }
+            result = result.Take(searching.Take);
+            return searching.ToPagingSearchingResult(result, totalCount);
         }
 
         #endregion

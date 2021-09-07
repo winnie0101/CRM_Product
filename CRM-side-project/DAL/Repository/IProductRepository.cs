@@ -1,5 +1,7 @@
 ﻿using CRM_side_project.Application.Product.Contract;
+using CRM_side_project.DAL.Repository.Common;
 using CRM_side_project.Models;
+using CrmSysCRM_side_projecttemApi.DAL.Repository.Products.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,9 @@ namespace CRM_side_project.DAL.Repository
         IQueryable<GetAllProductResponse> GetAllProduct();
         Task<int> UpdateProduct(long id, UpdateProductRequest request);
         Task<int> DeleteProduct(long id);
+
+        //關鍵字查詢
+        Task<PagingSearchingResult<ProductDetail>> GetProducts(PagingSearching searching);
         #endregion
 
         #region Type
