@@ -1,6 +1,7 @@
 ﻿using CRM_side_project.Application.Common;
 using CRM_side_project.Application.Product.Contract;
 using CRM_side_project.DAL.Repository;
+using CRM_side_project.DAL.Repository.Models;
 using CRM_side_project.Handler;
 using CrmSysCRM_side_projecttemApi.DAL.Repository.Products.Models;
 using Microsoft.EntityFrameworkCore;
@@ -122,6 +123,17 @@ namespace CRM_side_project.Application
                 code = 0000,
                 data = result.Data,
                 paging = new Paging(request.PageOffset + 1, request.PageSize, result.TotalCount)
+            };
+        }
+
+        //匯出csv
+        public async ValueTask<ExportResponse<IEnumerable<ExportProduct>>> ExportGetProducts(ExportRequest request)
+        {
+            var result = await _repository.ExportGetProducts(request.ToExportSearching());
+            return new ExportResponse<IEnumerable<ExportProduct>>()
+            {
+                code = 0000,
+                data = result.Data,
             };
         }
 

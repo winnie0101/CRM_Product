@@ -1,5 +1,6 @@
 ﻿using CRM_side_project.Application.Product.Contract;
 using CRM_side_project.DAL.Repository.Common;
+using CRM_side_project.DAL.Repository.Models;
 using CRM_side_project.Models;
 using CrmSysCRM_side_projecttemApi.DAL.Repository.Products.Models;
 using System;
@@ -22,6 +23,9 @@ namespace CRM_side_project.DAL.Repository
 
         //關鍵字查詢
         Task<PagingSearchingResult<ProductDetail>> GetProducts(PagingSearching searching);
+
+        //匯出csv
+        Task<ExportSearchingResult<ExportProduct>> ExportGetProducts(ExportSearching searching);
         #endregion
 
         #region Type

@@ -166,3 +166,4 @@ D:\winnie\CRM_Product\CRM_Product\CRM-side-project\obj\Debug\netcoreapp3.1\CRM-s
 D:\winnie\CRM_Product\CRM_Product\CRM-side-project\obj\Debug\netcoreapp3.1\CRM-side-project.dll
 D:\winnie\CRM_Product\CRM_Product\CRM-side-project\obj\Debug\netcoreapp3.1\CRM-side-project.pdb
 D:\winnie\CRM_Product\CRM_Product\CRM-side-project\obj\Debug\netcoreapp3.1\CRM-side-project.genruntimeconfig.cache
+D:\winnie\CRM_Product\CRM_Product\CRM-side-project\bin\Debug\netcoreapp3.1\CsvHelper.dll

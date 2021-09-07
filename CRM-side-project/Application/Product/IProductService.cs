@@ -1,5 +1,6 @@
 ﻿using CRM_side_project.Application.Common;
 using CRM_side_project.Application.Product.Contract;
+using CRM_side_project.DAL.Repository.Models;
 using CrmSysCRM_side_projecttemApi.DAL.Repository.Products.Models;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,9 @@ namespace CRM_side_project.Application
 
         //關鍵字查詢
         ValueTask<PagingResponse<IEnumerable<ProductDetail>>> GetProducts(PagingRequest request);
+
+        //匯出csv
+        ValueTask<ExportResponse<IEnumerable<ExportProduct>>> ExportGetProducts(ExportRequest request);
         #endregion
 
         #region Type

@@ -1,11 +1,15 @@
 ﻿using CRM_side_project.Application;
 using CRM_side_project.Application.Common;
 using CRM_side_project.Application.Product.Contract;
+using CsvHelper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CRM_side_project.Controller
@@ -56,7 +60,28 @@ namespace CRM_side_project.Controller
             return Ok(await _service.GetProducts(request));
         }
 
+        //匯出csv
+        [HttpPost("Export")]
+        public async ValueTask<IActionResult> Export([FromBody] ExportRequest request)
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            var data = _service.ExportGetProducts(request).Result.data;
+            byte[] result;
+            using (var memoryStream = new MemoryStream())
+            {
+                using(var streamWriter= new StreamWriter(memoryStream,Encoding.UTF8))
+                {
+                    using(var csvWriter = new CsvWriter(streamWriter,CultureInfo.CurrentCulture))
+                    {
+                        csvWriter.WriteRecords(data);
+                        streamWriter.Flush();
+                        result = memoryStream.ToArray();
+                    }
+                }
 
+            }
+            return new FileStreamResult(new MemoryStream(result), "text/csv") { FileDownloadName = "filename.csv" };
+        }
 
         #region Type
         // POST: ProductController/CreateType
