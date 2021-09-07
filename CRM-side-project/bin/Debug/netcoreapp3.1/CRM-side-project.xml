@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CRM-side-project</name>
+    </assembly>
+    <members>
+        <member name="P:CRM_side_project.Application.Common.Paging.PageIndex">
+            <summary>
+            目前頁碼
+            </summary>
+        </member>
+        <member name="P:CRM_side_project.Application.Common.Paging.PageSize">
+            <summary>
+            單頁資料最大筆數
+            </summary>
+        </member>
+        <member name="P:CRM_side_project.Application.Common.Paging.Offset">
+            <summary>
+            位移
+            </summary>
+        </member>
+        <member name="P:CRM_side_project.Application.Common.Paging.RowsTotal">
+            <summary>
+            資料總筆數
+            </summary>
+        </member>
+        <member name="P:CRM_side_project.Application.Product.Contract.CreateProductRequest.IsEnabled">
+            <summary>
+            1:啟用 0:停用
+            </summary>
+        </member>
+        <member name="P:CRM_side_project.Application.Product.Contract.UpdateProductRequest.IsEnabled">
+            <summary>
+            1:啟用 0:停用
+            </summary>
+        </member>
+    </members>
+</doc>

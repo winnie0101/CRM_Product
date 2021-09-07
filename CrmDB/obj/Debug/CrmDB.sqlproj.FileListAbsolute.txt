@@ -1,0 +1,6 @@
+D:\winnie\CRM-side-project\CrmDB\bin\Debug\CrmDB.dacpac
+D:\winnie\CRM-side-project\CrmDB\bin\Debug\CrmDB.dll
+D:\winnie\CRM-side-project\CrmDB\bin\Debug\CrmDB.pdb
+D:\winnie\CRM-side-project\CrmDB\obj\Debug\CrmDB.sqlproj.AssemblyReference.cache
+D:\winnie\CRM-side-project\CrmDB\obj\Debug\CrmDB.dll
+D:\winnie\CRM-side-project\CrmDB\obj\Debug\CrmDB.pdb
